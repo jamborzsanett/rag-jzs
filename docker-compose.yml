@@ -1,0 +1,79 @@
+# natív Ollamával:      docker compose up --build -d
+# Ollama konténerben:   OLLAMA_URL=http://ollama:11434 docker compose --profile ollama up --build -d
+#                       (Windowson: set OLLAMA_URL=...)
+# újraindexelés:        docker compose run --rm ingest python -m scripts.ingest && docker compose restart api
+
+x-app: &app
+  image: ekm-rag:latest
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    OLLAMA_BASE_URL: ${OLLAMA_URL:-http://host.docker.internal:11434}
+    INDEX_DIR: /app/data/index
+  extra_hosts:
+    - "host.docker.internal:host-gateway"   # Linuxhoz kell
+  volumes:
+    - index:/app/data/index
+
+services:
+  # indexel, ha még nincs index, aztán kilép
+  ingest:
+    <<: *app
+    build: .                                
+    command: ["python", "-m", "scripts.ingest", "--if-empty"]
+    restart: "no"
+    healthcheck:
+      disable: true
+    depends_on:
+      ollama-pull:
+        condition: service_completed_successfully
+        required: false                     # csak --profile ollama esetén
+
+  api:
+    <<: *app
+    pull_policy: never                      # az ingest buildeli
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    depends_on:
+      ingest:
+        condition: service_completed_successfully
+
+  ollama:
+    image: ollama/ollama:0.40.16
+    profiles: ["ollama"]
+    volumes:
+      - ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+    # GPU-hoz (nvidia-container-toolkit kell):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # letölti a modelleket, aztán kilép
+  ollama-pull:
+    image: ollama/ollama:0.40.16
+    profiles: ["ollama"]
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-bge-m3}
+      OLLAMA_LLM_MODEL: ${OLLAMA_LLM_MODEL:-gemma3:4b}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - >-
+        until ollama list >/dev/null 2>&1; do sleep 1; done;
+        ollama pull "$${OLLAMA_EMBEDDING_MODEL:-bge-m3}" &&
+        ollama pull "$${OLLAMA_LLM_MODEL:-gemma3:4b}"
+    restart: "no"
+    depends_on:
+      - ollama
+
+volumes:
+  index:
+  ollama:

@@ -1,0 +1,62 @@
+[
+  {
+    "question": "Mekkora hőszigetelés kell fűtés hálózatra belső átmérő 35mm vezetékre ?",
+    "expected_locations": ["1. melléklet 3.3.2. pont"],
+    "expected_terms": ["30 mm", "belső átmérővel megegyező"],
+    "note": "A 35 mm határeset: a táblázat '22–35 mm: 30 mm' és '35–100 mm: a belső átmérővel megegyező' sora is illik rá."
+  },
+  {
+    "question": "Mikor kötelező időjárás függő szabályozás egy épületen?",
+    "expected_locations": ["1. melléklet 3.2.1. pont"],
+    "expected_terms": ["100 m"]
+  },
+  {
+    "question": "Mi a hőátbocsátási tényező követelményértéke üvegtető esetén?",
+    "expected_locations": ["1. melléklet 1.1. pont (1/2. rész)"],
+    "expected_terms": ["1,5"]
+  },
+  {
+    "question": "Új építésű nem lakó épület esetében, ha az épület legalább 10 parkolóhellyel rendelkezik, legalább hány elektromos töltőpontot kell létrehozni?",
+    "expected_locations": ["4. § (1) bekezdés"],
+    "expected_terms": ["legalább egy", "legalább 1"],
+    "note": "A rendelet 'tíznél több' parkolóhelyet ír, a kérdés 'legalább 10'-et: pont 10 helynél szigorúan véve nem vonatkozik rá."
+  },
+  {
+    "question": "Mit jelent az alternatív rendszer ?",
+    "expected_locations": ["2. § 1. pont (alternatív rendszer)"],
+    "expected_terms": ["megújuló"]
+  },
+  {
+    "question": "Mennyi a nyári hővédelemre vonatkozó követelmény?",
+    "expected_locations": ["1. melléklet 2. pont"],
+    "expected_terms": ["8%", "8 %"],
+    "note": "A megengedett érték képlet, amely az eredetiben kép: a tudásbázisban csak a feltétel (8%, 45°) szerepel."
+  },
+  {
+    "question": "Mikor kötelező egy  fűtési rendszer beszabályozása ?",
+    "expected_locations": ["1. melléklet 3.2.5. pont"],
+    "expected_terms": ["300 m"],
+    "note": "A kérdéssorban '3.2.6. felett' szerepelt: ez a 3.2.5. pont (Beszabályozás, próbaüzem, átadás)."
+  },
+  {
+    "question": "Mennyi a HEPA szűrő megengedett nyomásvesztése (Pa) ?",
+    "expected_locations": ["1. melléklet 3.5.1.2. pont"],
+    "expected_terms": ["500"]
+  },
+  {
+    "question": "Légtechnikai rendszer beszabályozást követően hogy kell ellenőrizni ?",
+    "expected_locations": ["1. melléklet 3.5.3.1. pont"],
+    "expected_terms": ["10%", "10 %"]
+  },
+  {
+    "question": "Hogy kell kiszámolni a lakó és szállás jellegű épületek esetén az összesített energetikai jellemzőjét?",
+    "expected_locations": [],
+    "expected_terms": [],
+    "note": "A válasz a 2. melléklet 2.1. pontjában van, amely csak PDF-ben érhető el, így a tudásbázisban nincs: a helyes viselkedés az answered=false."
+  },
+  {
+    "question": "Referencia épületnél mit kell feltételezni HMV hőtermelőnek?",
+    "expected_locations": ["5. melléklet 2.2.2. pont"],
+    "expected_terms": ["kondenzációs"]
+  }
+]

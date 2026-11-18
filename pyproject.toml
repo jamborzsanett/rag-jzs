@@ -1,0 +1,50 @@
+[project]
+name = "ekm-rag"
+version = "0.1.0"
+description = "RAG-alapú kérdés-válasz API a 9/2023. (V. 25.) ÉKM rendelethez"
+readme = "README.md"
+authors = [
+    { name = 'zsanett', email = "" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "chromadb>=1.5.9",
+    "fastapi>=0.162.7",
+    "google-genai>=3.3.0",
+    "httpx>=0.28.1",
+    "langgraph>=1.2.22",
+    "pydantic-settings>=2.16.3",
+    "rank-bm25>=0.2.2",
+    "snowballstemmer>=3.1.1",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.5.0",
+    "ruff>=0.17.5",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-m 'not integration'"
+markers = ["integration: valódi Ollamát vagy Geminit hívó teszt (külön indítandó)"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.format]
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "PIE"]
+ignore = ["E501"]

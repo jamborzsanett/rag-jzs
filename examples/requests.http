@@ -1,0 +1,34 @@
+### Mintakérések (VS Code REST Client / JetBrains HTTP Client). curl-változat: README.md
+
+### Állapot
+GET http://localhost:8000/health
+
+### Sikeres kérdés
+POST http://localhost:8000/ask
+Content-Type: application/json
+
+{"question": "Mekkora a homlokzati fal megengedett hőátbocsátási tényezője?"}
+
+### Fogalom
+POST http://localhost:8000/ask
+Content-Type: application/json
+
+{"question": "Mit jelent a jelentős felújítás?"}
+
+### Nincs releváns találat -> 200, answered=false
+POST http://localhost:8000/ask
+Content-Type: application/json
+
+{"question": "Hogyan készül a gulyásleves?"}
+
+### Üres kérdés -> 422 invalid_question
+POST http://localhost:8000/ask
+Content-Type: application/json
+
+{"question": "   "}
+
+### Hiányzó mező -> 422 invalid_request
+POST http://localhost:8000/ask
+Content-Type: application/json
+
+{}
